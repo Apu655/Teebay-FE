@@ -1,0 +1,1 @@
+export { customThemeConfig } from "./mantineTheme";
