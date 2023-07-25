@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
+import { GeneralRoutes } from "./GeneralRoutes";
 
-export const AppRoutes = ()=>{
-    return useRoutes([
-        
-    ])
-}
+const AppRoutes = () => {
+  return useRoutes([...GeneralRoutes]);
+};
+export default AppRoutes;
