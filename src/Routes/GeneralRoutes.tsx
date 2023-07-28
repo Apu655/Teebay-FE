@@ -1,5 +1,5 @@
 import { RouteType } from "./Types";
-import { Registration, Login, Test } from "@/Pages/GeneralPages";
+import { Registration, Login } from "@/Pages/GeneralPages";
 
 export const GeneralRoutes: RouteType[] = [
   {
@@ -9,10 +9,5 @@ export const GeneralRoutes: RouteType[] = [
   {
     path: "/registration",
     element: <Registration />,
-  },
-
-  {
-    path: "/:id",
-    element: <Test />,
   },
 ];

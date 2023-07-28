@@ -75,7 +75,6 @@ const Login = () => {
                 <Tooltip label="Login">
                   <Button type="submit">Login</Button>
                 </Tooltip>
-                <Button onClick={handleLogin}>Test</Button>
               </Group>
               <Flex justify="center">
                 <StyledText>

@@ -94,7 +94,7 @@ const Registration = () => {
               />
               <Group mt={40} position="center">
                 <Tooltip label="Login">
-                  <Button type="submit">Login</Button>
+                  <Button type="submit">Sign Up</Button>
                 </Tooltip>
               </Group>
               <Flex justify="center">
