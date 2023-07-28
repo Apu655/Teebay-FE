@@ -1,7 +1,8 @@
 import { Box, Flex, Card, Button, Group, Tooltip } from "@mantine/core";
 import { IconAt, IconLock, IconLocation } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, isEmail, hasLength, matchesField } from "@mantine/form";
+import { useMutation } from "@apollo/client";
 
 import {
   PageStyle,
@@ -10,8 +11,10 @@ import {
   StyledTextInput,
 } from "@/Common/Components";
 import { StyledText, StyledTitle } from "@/Common/Components/TextStyles";
+import { REGISTER } from "@/Queries/UserQueries";
 
 const Registration = () => {
+  const navigate = useNavigate();
   const userRegistrationForm = useForm({
     initialValues: {
       firstName: "",
@@ -29,6 +32,15 @@ const Registration = () => {
     },
   });
 
+  const [register] = useMutation(REGISTER, {
+    variables: userRegistrationForm.values,
+  });
+
+  const handleRegistration = async () => {
+    register();
+    navigate("/login");
+  };
+
   return (
     <PageStyle>
       <Flex mih="90vh" justify="center" align="center">
@@ -39,9 +51,7 @@ const Registration = () => {
           </StyledTitle>
           <Card withBorder>
             <StyledForm
-              onSubmit={userRegistrationForm.onSubmit((values) => {
-                console.log(values);
-              })}
+              onSubmit={userRegistrationForm.onSubmit(handleRegistration)}
             >
               <Flex gap={10}>
                 <StyledTextInput

@@ -1,4 +1,3 @@
-
 import { RouteType } from "./Types";
 import { Registration, Login, Test } from "@/Pages/GeneralPages";
 
@@ -13,7 +12,7 @@ export const GeneralRoutes: RouteType[] = [
   },
 
   {
-    path: "/",
+    path: "/:id",
     element: <Test />,
   },
 ];

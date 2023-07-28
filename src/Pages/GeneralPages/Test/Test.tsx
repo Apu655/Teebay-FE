@@ -2,8 +2,20 @@ import { StyledTitle } from "@/Common/Components";
 import { ActionIcon, Button, Card, Flex, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconTrashFilled } from "@tabler/icons-react";
+import { useQuery, gql } from "@apollo/client";
+import { useParams } from "react-router-dom";
 
+const GET_USER = gql`
+  query {
+    getAllProduct {
+      name
+      price
+    }
+  }
+`;
 const Test = () => {
+  const { id } = useParams();
+  console.log("Param", id);
   const [deleteWarningMessage, deleteWarningMessageHandler] =
     useDisclosure(false);
   const DeleteWarningMessage = () => {
@@ -24,6 +36,9 @@ const Test = () => {
       </Modal>
     );
   };
+  const obj = useQuery(GET_USER);
+
+
   return (
     <Card m={10} p={10} withBorder>
       <Flex justify="space-between">

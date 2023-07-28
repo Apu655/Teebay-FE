@@ -2,10 +2,32 @@ import { StyledTitle } from "@/Common/Components";
 import { ActionIcon, Button, Card, Flex, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconTrashFilled } from "@tabler/icons-react";
-
-const ProductCard = () => {
+import { useNavigate } from "react-router-dom";
+import { IProductCard } from "./Type";
+import { useMutation } from "@apollo/client";
+import { DELETE_PRODUCT } from "@/Mutations/ProductMutations";
+const ProductCard = ({
+  id,
+  name,
+  price,
+  description,
+  categories,
+  refetch,
+}: any) => {
   const [deleteWarningMessage, deleteWarningMessageHandler] =
     useDisclosure(false);
+  const navigate = useNavigate();
+
+  const [
+    deleteProduct,
+    { data: deleteData, loading: deleteLoading, error: deleteError },
+  ] = useMutation(DELETE_PRODUCT);
+
+  const handleDelete = (id: number) => {
+    deleteProduct({ variables: { id: id } });
+    deleteWarningMessageHandler.close();
+    refetch();
+  };
 
   const DeleteWarningMessage = () => {
     return (
@@ -20,40 +42,61 @@ const ProductCard = () => {
           <Button onClick={() => deleteWarningMessageHandler.close()}>
             No
           </Button>
-          <Button>Yes</Button>
+          <Button
+            onClick={() => {
+              handleDelete(id);
+            }}
+          >
+            Yes
+          </Button>
         </Flex>
       </Modal>
     );
   };
 
+  const handleTrashIconClick = (e: any) => {
+    e.stopPropagation();
+    deleteWarningMessageHandler.toggle();
+  };
+
+  const productCardClickHandler = (id: string | number) => {
+    navigate("/myProduct/" + id);
+  };
+
   return (
-    <Card withBorder>
-      <Flex justify="space-between">
-        <StyledTitle>Cricket Kit</StyledTitle>
-        <ActionIcon
-          onClick={() => {
-            deleteWarningMessageHandler.toggle();
-          }}
-          variant="transparent"
-        >
-          <IconTrashFilled />
-        </ActionIcon>
-        <DeleteWarningMessage />
-      </Flex>
-      <Text c="gray">Categories: Sporting Goods; Outdoor</Text>
-      <Text c="gray">Price: $500| Rent:$100 daily</Text>
-      <Text>
-        2016 cricket kit brand now in box, never used bought from the shop
-      </Text>
-      <Flex justify="space-between">
-        <Text c="dimmed" fz="xs">
-          Date posted: 21st August 2020
+    <>
+      <Card
+        onClick={() => {
+          productCardClickHandler(id);
+        }}
+        withBorder
+      >
+        <Flex justify="space-between">
+          <StyledTitle>{name}</StyledTitle>
+          <ActionIcon onClick={handleTrashIconClick} variant="transparent">
+            <IconTrashFilled />
+          </ActionIcon>
+        </Flex>
+        <Text c="gray">
+          Categories:{" "}
+          {categories &&
+            categories.map((category: any, index: number) => (
+              <span key={index}>{category.name} </span>
+            ))}
         </Text>
-        <Text c="dimmed" fz="xs">
-          10,000 views
-        </Text>
-      </Flex>
-    </Card>
+        <Text c="gray">Price: {price}| Rent:$100 daily</Text>
+        <Text>{description}</Text>
+        <Flex justify="space-between">
+          <Text c="dimmed" fz="xs">
+            Date posted: 21st August 2020
+          </Text>
+          <Text c="dimmed" fz="xs">
+            10,000 views
+          </Text>
+        </Flex>
+      </Card>
+      <DeleteWarningMessage />
+    </>
   );
 };
 
