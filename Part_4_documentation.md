@@ -43,4 +43,8 @@ example fields: id:Int
 ### 6. Get Product
 User can get product by product id, by product creator and it can also get all the product using mutation getProductById, getProductByCreator, getAllProduct
 
+## Corner Case
+
+If the user is logged out then you won't able to access other routes, he will be redirected to login page
+
 
