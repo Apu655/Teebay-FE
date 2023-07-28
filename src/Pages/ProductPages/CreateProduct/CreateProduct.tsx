@@ -2,7 +2,8 @@ import { PageStyle, StyledTextInput, StyledTitle } from "@/Common/Components";
 import { UserContext } from "@/Context/UserContext";
 import { AuthGuard } from "@/Guards";
 import { ADD_PRODUCTS } from "@/Mutations/ProductMutations";
-import { useMutation } from "@apollo/client";
+import { GET_PRODUCTS_BY_CREATOR } from "@/Queries/ProductQueries";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   Flex,
   Button,
@@ -50,7 +51,7 @@ const CreateProduct = () => {
     try {
       if (user) {
         productCreationForm.setFieldValue("createdBy", user.id);
-        addProduct();
+        await addProduct();
         navigate("/myProduct");
       }
     } catch (error) {

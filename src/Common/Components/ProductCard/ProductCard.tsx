@@ -23,10 +23,11 @@ const ProductCard = ({
     { data: deleteData, loading: deleteLoading, error: deleteError },
   ] = useMutation(DELETE_PRODUCT);
 
-  const handleDelete = (id: number) => {
-    deleteProduct({ variables: { id: id } });
+  const handleDelete = async (id: number) => {
+    await deleteProduct({ variables: { id: id } });
+    
     deleteWarningMessageHandler.close();
-    refetch();
+    await refetch();
   };
 
   const DeleteWarningMessage = () => {

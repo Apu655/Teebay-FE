@@ -26,12 +26,10 @@ const MyProduct = () => {
       console.log(user);
       refetch();
     }
-  }, [user]);
+  }, [user, data]);
 
   useEffect(() => {
-    if (user && user.id) {
-      refetch();
-    }
+    refetch();
   }, []);
   if (loading) return <LoadingOverlay visible={loading} />;
   return (
