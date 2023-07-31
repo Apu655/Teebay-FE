@@ -3,7 +3,7 @@ import { MantineThemeOverride } from "@mantine/core";
 export const customThemeConfig: MantineThemeOverride = {
   colors: {
     blue: [
-      "#6a84a6",
+      "#6600ff",
       "#5d7aa1",
       "#5677a3",
       "#4e72a3",

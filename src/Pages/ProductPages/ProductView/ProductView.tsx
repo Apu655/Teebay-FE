@@ -1,111 +1,42 @@
-import { PageStyle, StyledTextInput } from "@/Common/Components";
-import { AuthGuard } from "@/Guards";
-import { UPDATE_PRODUCT } from "@/Mutations/ProductMutations";
+import { PageStyle, StyledText, StyledTitle } from "@/Common/Components";
 import { GET_PRODUCTS_BY_ID } from "@/Queries/ProductQueries";
-import { useMutation, useQuery } from "@apollo/client";
-import {
-  Box,
-  Button,
-  Flex,
-  LoadingOverlay,
-  MultiSelect,
-  NumberInput,
-  Textarea,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
-import React, { useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { Box, Button, Flex, LoadingOverlay, Spoiler } from "@mantine/core";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const categoriesLabels = [
-  { value: "1", label: "Electronics" },
-  { value: "2", label: "Outdoor" },
-  { value: "3", label: "Toys" },
-  { value: "4", label: "Furniture" },
-  { value: "5", label: "Home Appliances" },
-  { value: "6", label: "Sporting Goods" },
-];
-const ProductView = () => {
+type Props = {};
+
+const ProductView = (props: Props) => {
   const { id } = useParams();
-  const updateProductForm = useForm({
-    initialValues: {
-      name: "",
-      description: "",
-      categories: [],
-    },
-  });
+  const [productData, setProductData] = useState<any>();
   const { data, loading, error } = useQuery(GET_PRODUCTS_BY_ID, {
     variables: { id: id },
   });
-
-  const [
-    updateProduct,
-    { data: updateData, loading: updateLoading, error: updateError },
-  ] = useMutation(UPDATE_PRODUCT);
-
-  const handleUpdate = (e: any) => {
-    e.preventDefault();
-    try {
-      updateProduct({ variables: updateProductForm.values });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  console.log(data);
   useEffect(() => {
-    if (data) {
-      const productData = data.getProductById;
-      updateProductForm.setFieldValue("id", productData.id);
-      updateProductForm.setFieldValue("name", productData.name);
-      updateProductForm.setFieldValue("description", productData.description);
-      updateProductForm.setFieldValue("price", productData.price);
-      updateProductForm.setFieldValue("rentPrice", productData.price);
-      const mappedCategories = productData.categories.map((category: any) =>
-        category.id.toString()
-      );
-      updateProductForm.setFieldValue("categories", mappedCategories);
+    if (data && data.getProductById) {
+      setProductData(data.getProductById);
     }
   }, [data]);
-  if (loading) return <LoadingOverlay visible={loading} />;
+  console.log(productData);
+  const handleProductBuy = ()=>{
+    console.log("")
+  }
+  if (loading || !productData) return <LoadingOverlay visible={true} />;
   return (
-    <AuthGuard>
-      <PageStyle>
-        <Flex p={40} mih="90vh" direction="column" justify="center">
-          <StyledTextInput
-            // defaultValue={data && data.getProductById.name}
-            my={10}
-            label="Title"
-            {...updateProductForm.getInputProps("name")}
-          />
-          <MultiSelect
-            my={10}
-            label="Categories"
-            data={categoriesLabels}
-            {...updateProductForm.getInputProps("categories")}
-          />
-          <Textarea
-            my={10}
-            label="Description"
-            {...updateProductForm.getInputProps("description")}
-          />
-          <Flex gap={20}>
-            <NumberInput
-              my={10}
-              label="Price"
-              {...updateProductForm.getInputProps("price")}
-            />
-            <NumberInput
-              my={10}
-              label="Rent"
-              {...updateProductForm.getInputProps("rentPrice")}
-            />
-            <NumberInput my={10} label="Price" />
-          </Flex>
-          <Flex>
-            <Button onClick={handleUpdate}>Edit Product</Button>
-          </Flex>
-        </Flex>
-      </PageStyle>
-    </AuthGuard>
+    <PageStyle>
+      <Box mt={100} mih="40vh">
+        <StyledTitle>{productData.name}</StyledTitle>
+        <StyledText>Categories: Electronics</StyledText>
+        <StyledText>Price : ${productData.price}</StyledText>
+        <StyledText>{productData.description}</StyledText>
+      </Box>
+      <Flex justify="flex-end" gap={20}>
+        <Button>Rent</Button>
+        <Button>Buy</Button>
+      </Flex>
+    </PageStyle>
   );
 };
 

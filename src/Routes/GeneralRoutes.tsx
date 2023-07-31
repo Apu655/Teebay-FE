@@ -10,4 +10,8 @@ export const GeneralRoutes: RouteType[] = [
     path: "/registration",
     element: <Registration />,
   },
+  {
+    path: "*",
+    element: <div>Not found</div>,
+  },
 ];

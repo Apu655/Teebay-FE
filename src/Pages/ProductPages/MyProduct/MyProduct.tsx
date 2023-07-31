@@ -23,7 +23,6 @@ const MyProduct = () => {
 
   useEffect(() => {
     if (user && user.id) {
-      console.log(user);
       refetch();
     }
   }, [user, data]);
