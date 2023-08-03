@@ -46,6 +46,9 @@ export const GET_USER_DETAILS = gql`
           name
           description
           price
+          rentPrice
+          rentType
+          createdAt
           categories {
             name
           }
@@ -59,6 +62,9 @@ export const GET_USER_DETAILS = gql`
           name
           description
           price
+          rentType
+          rentPrice
+          createdAt
           categories {
             name
           }
@@ -72,6 +78,9 @@ export const GET_USER_DETAILS = gql`
           name
           description
           price
+          rentType
+          rentPrice
+          createdAt
           categories {
             name
           }
@@ -85,6 +94,9 @@ export const GET_USER_DETAILS = gql`
           name
           description
           price
+          createdAt
+          rentType
+          rentPrice
           categories {
             name
           }

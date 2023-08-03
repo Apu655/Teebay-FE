@@ -33,7 +33,12 @@ const AllProduct = () => {
         <ProductListWrapper>
           {products &&
             products.map((val: any, index: number) => (
-              <ProductViewCard refetch={refetch} {...val} key={index} />
+              <ProductViewCard
+                refetch={refetch}
+                {...val}
+                link={true}
+                key={index}
+              />
             ))}
         </ProductListWrapper>
         <Flex my={20} justify="flex-end"></Flex>

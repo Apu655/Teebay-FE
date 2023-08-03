@@ -1,13 +1,26 @@
 import { StyledTitle } from "@/Common/Components";
 import { Card, Flex, Text } from "@mantine/core";
+import dayjs from "dayjs";
 
 import { useNavigate } from "react-router-dom";
 
-const ProductViewCard = ({ id, name, price, description, categories }: any) => {
+const ProductViewCard = ({
+  id,
+  name,
+  price,
+  description,
+  categories,
+  rentPrice,
+  rentType,
+  createdAt,
+  link = false,
+}: any) => {
   const navigate = useNavigate();
 
   const productCardClickHandler = (id: string | number) => {
-    navigate("/" + id);
+    if (link) {
+      navigate("/" + id);
+    }
   };
 
   return (
@@ -28,11 +41,14 @@ const ProductViewCard = ({ id, name, price, description, categories }: any) => {
               <span key={index}>{category.name} </span>
             ))}
         </Text>
-        <Text c="gray">Price: {price}| Rent:$100 daily</Text>
+        <Text c="gray">
+          Price: {price}| Rent:${rentPrice}/{rentType}
+        </Text>
         <Text>{description}</Text>
         <Flex justify="space-between">
           <Text c="dimmed" fz="xs">
-            Date posted: 21st August 2020
+            Date posted:{" "}
+            {dayjs(parseFloat(createdAt)).format("YYYY-MM-DD HH:mm:ss")}
           </Text>
           <Text c="dimmed" fz="xs">
             10,000 views
