@@ -17,12 +17,16 @@ export const REGISTER = gql`
     $lastName: String
     $email: String!
     $password: String!
+    $address: String
+    $phoneNumber: String
   ) {
     createUser(
       email: $email
       password: $password
       firstName: $firstName
       lastName: $lastName
+      address: $address
+      phoneNumber: $phoneNumber
     ) {
       email
       firstName

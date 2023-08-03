@@ -37,7 +37,7 @@ const Registration = () => {
   });
 
   const handleRegistration = async () => {
-    register();
+    await register();
     navigate("/login");
   };
 

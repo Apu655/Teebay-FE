@@ -11,6 +11,7 @@ import {
   MultiSelect,
   NumberInput,
   Textarea,
+  Select,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useEffect } from "react";
@@ -26,6 +27,10 @@ const categoriesLabels = [
 ];
 const ProductEdit = () => {
   const { id } = useParams();
+  const rentType = [
+    { value: "hour", label: "Hourly" },
+    { value: "day", label: "Day" },
+  ];
   const updateProductForm = useForm({
     initialValues: {
       name: "",
@@ -58,7 +63,8 @@ const ProductEdit = () => {
       updateProductForm.setFieldValue("name", productData.name);
       updateProductForm.setFieldValue("description", productData.description);
       updateProductForm.setFieldValue("price", productData.price);
-      updateProductForm.setFieldValue("rentPrice", productData.price);
+      updateProductForm.setFieldValue("rentPrice", productData.rentPrice);
+      updateProductForm.setFieldValue("rentType", productData.rentType);
       const mappedCategories = productData.categories.map((category: any) =>
         category.id.toString()
       );
@@ -93,12 +99,18 @@ const ProductEdit = () => {
               label="Price"
               {...updateProductForm.getInputProps("price")}
             />
+
             <NumberInput
               my={10}
               label="Rent"
               {...updateProductForm.getInputProps("rentPrice")}
             />
-            <NumberInput my={10} label="Price" />
+            <Select
+              my={10}
+              label="Rent"
+              data={rentType}
+              {...updateProductForm.getInputProps("rentType")}
+            />
           </Flex>
           <Flex>
             <Button onClick={handleUpdate}>Edit Product</Button>

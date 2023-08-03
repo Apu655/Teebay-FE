@@ -3,6 +3,7 @@ import { ActionIcon, Button, Card, Flex, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconTrashFilled } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 import { IProductCard } from "./Type";
 import { useMutation } from "@apollo/client";
 import { DELETE_PRODUCT } from "@/Mutations/ProductMutations";
@@ -12,6 +13,8 @@ const ProductCard = ({
   price,
   description,
   categories,
+  rentPrice,
+  createdAt,
   refetch,
 }: any) => {
   const [deleteWarningMessage, deleteWarningMessageHandler] =
@@ -25,7 +28,7 @@ const ProductCard = ({
 
   const handleDelete = async (id: number) => {
     await deleteProduct({ variables: { id: id } });
-    
+
     deleteWarningMessageHandler.close();
     await refetch();
   };
@@ -35,7 +38,7 @@ const ProductCard = ({
       <Modal
         opened={deleteWarningMessage}
         onClose={() => deleteWarningMessageHandler.close()}
-        title="Authentication"
+        title="Are you sure you want to delete this product?"
         centered
       >
         Are you sure you want to delete this product?
@@ -85,11 +88,13 @@ const ProductCard = ({
               <span key={index}>{category.name} </span>
             ))}
         </Text>
-        <Text c="gray">Price: {price}| Rent:$100 daily</Text>
+        <Text c="gray">
+          Price: {price}| Rent:{rentPrice}
+        </Text>
         <Text>{description}</Text>
         <Flex justify="space-between">
           <Text c="dimmed" fz="xs">
-            Date posted: 21st August 2020
+            Date posted: {dayjs(parseFloat(createdAt)).format('YYYY-MM-DD HH:mm:ss')}
           </Text>
           <Text c="dimmed" fz="xs">
             10,000 views

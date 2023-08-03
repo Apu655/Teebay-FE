@@ -6,6 +6,7 @@ export const ADD_PRODUCTS = gql`
     $description: String
     $price: Float
     $rentPrice: Float
+    $rentType: String
     $createdBy: Int
     $categories: [String]
   ) {
@@ -13,6 +14,7 @@ export const ADD_PRODUCTS = gql`
       name: $name
       description: $description
       price: $price
+      rentType: $rentType
       rentPrice: $rentPrice
       createdBy: $createdBy
       categories: $categories
@@ -33,6 +35,7 @@ export const UPDATE_PRODUCT = gql`
     $description: String
     $price: Float
     $rentPrice: Float
+    $rentType: String
     $categories: [String]
   ) {
     editProduct(
@@ -41,6 +44,7 @@ export const UPDATE_PRODUCT = gql`
       description: $description
       price: $price
       rentPrice: $rentPrice
+      rentType: $rentType
       categories: $categories
     ) {
       id
@@ -58,6 +62,32 @@ export const DELETE_PRODUCT = gql`
       name
       description
       price
+    }
+  }
+`;
+
+export const BUY_PRODUCT = gql`
+  mutation buyProduct($productId: Int, $userId: Int) {
+    buyProduct(productId: $productId, userId: $userId) {
+      id
+    }
+  }
+`;
+
+export const RENT_PRODUCT = gql`
+  mutation rentProduct(
+    $productId: Int
+    $userId: Int
+    $startDate: String
+    $endDate: String
+  ) {
+    rentProduct(
+      productId: $productId
+      userId: $userId
+      startDate: $startDate
+      endDate: $endDate
+    ) {
+      id
     }
   }
 `;

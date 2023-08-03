@@ -8,6 +8,9 @@ export const GET_PRODUCTS = gql`
       description
       price
       createdBy
+      createdAt
+      rentPrice
+      rentType
       categories {
         name
       }
@@ -21,9 +24,13 @@ export const GET_PRODUCTS_BY_ID = gql`
       id
       name
       description
+      rentType
+      createdAt
       rentPrice
-      categories{
+      rentType
+      categories {
         id
+        name
       }
       price
     }
@@ -37,6 +44,9 @@ export const GET_PRODUCTS_BY_CREATOR = gql`
       name
       description
       price
+      createdAt
+      rentPrice
+      rentType
       createdBy
       categories {
         name

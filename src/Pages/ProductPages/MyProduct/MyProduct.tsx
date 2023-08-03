@@ -20,6 +20,7 @@ const MyProduct = () => {
     },
     skip: !user?.id,
   });
+  console.log(data);
 
   useEffect(() => {
     if (user && user.id) {

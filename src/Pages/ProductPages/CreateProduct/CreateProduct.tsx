@@ -12,6 +12,7 @@ import {
   MultiSelect,
   Text,
   NumberInput,
+  Select,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useContext, useEffect, useState } from "react";
@@ -20,6 +21,11 @@ import { useNavigate } from "react-router-dom";
 const CreateProduct = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const rentType = [
+    { value: "hour", label: "Hourly" },
+    { value: "day", label: "Day" },
+  ];
 
   const categoriesLabels = [
     { value: "1", label: "Electronics" },
@@ -37,7 +43,8 @@ const CreateProduct = () => {
       description: "",
       price: 0,
       createdBy: null,
-      rentPrice: 120,
+      rentPrice: 0,
+      rentType: "",
     },
   });
 
@@ -48,6 +55,7 @@ const CreateProduct = () => {
 
   const handleAddProduct = async (e: any) => {
     e.preventDefault();
+    console.log(productCreationForm.values);
     try {
       if (user) {
         productCreationForm.setFieldValue("createdBy", user.id);
@@ -99,23 +107,53 @@ const CreateProduct = () => {
             </>
           )}
           {current === 4 && (
-            <>
-              <StyledTitle>Select price for your product</StyledTitle>
+            <Flex justify="center" direction="column" gap={10}>
+              <StyledTitle>Select price</StyledTitle>
               <NumberInput
                 placeholder="Price"
                 label="Price"
                 withAsterisk
                 {...productCreationForm.getInputProps("price")}
               />
-            </>
+
+              <Flex gap={10}>
+                <NumberInput
+                  placeholder="Price"
+                  label="Rent"
+                  withAsterisk
+                  {...productCreationForm.getInputProps("rentPrice")}
+                />
+                <Select
+                  data={rentType}
+                  mt={25}
+                  placeholder="Select an option"
+                  {...productCreationForm.getInputProps("rentType")}
+                />
+              </Flex>
+            </Flex>
           )}
           {current == 5 && (
             <Flex my={10} gap={10} w="100%" direction="column">
               <StyledTitle>Summary</StyledTitle>
               <Text>Title: {productCreationForm.values.name}</Text>
-              {/* <Text>Categories: {productCreationForm.values.category}</Text> */}
+              <Text>
+                Categories:{" "}
+                {productCreationForm.values.categories.map((val, index) => {
+                  for (const category of categoriesLabels) {
+                    if (category.value == val) {
+                      return <span key={index}>{category.label} {index==productCreationForm.values.categories.length-1?"":", "}</span>;
+                    }
+                  }
+                })}
+              </Text>
               <Text>Description: {productCreationForm.values.description}</Text>
-              <Text>Price: {productCreationForm.values.price}</Text>
+              <Flex gap={10}>
+                <Text>Price: ${productCreationForm.values.price},</Text>
+                <Text>
+                  To rent:${productCreationForm.values.rentPrice} per{" "}
+                  {productCreationForm.values.rentType}
+                </Text>
+              </Flex>
             </Flex>
           )}
 
@@ -134,6 +172,7 @@ const CreateProduct = () => {
                   <Button
                     onClick={() => {
                       setCurrent((prev) => prev + 1);
+                      console.log(productCreationForm.values);
                     }}
                   >
                     Next
