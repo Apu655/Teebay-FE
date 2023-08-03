@@ -1,11 +1,8 @@
 import { StyledTitle } from "@/Common/Components";
-import { ActionIcon, Button, Card, Flex, Modal, Text } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconTrashFilled } from "@tabler/icons-react";
+import { Card, Flex, Text } from "@mantine/core";
+
 import { useNavigate } from "react-router-dom";
-import { IProductCard } from "./Type";
-import { useMutation } from "@apollo/client";
-import { DELETE_PRODUCT } from "@/Mutations/ProductMutations";
+
 const ProductViewCard = ({ id, name, price, description, categories }: any) => {
   const navigate = useNavigate();
 

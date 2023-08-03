@@ -34,3 +34,62 @@ export const REGISTER = gql`
     }
   }
 `;
+
+export const GET_USER_DETAILS = gql`
+  query gerUserDetails($id: Int) {
+    getUserDetails(id: $id) {
+      rentList {
+        id
+        productId
+        product {
+          id
+          name
+          description
+          price
+          categories {
+            name
+          }
+        }
+      }
+      LentDetail {
+        id
+        productId
+        product {
+          id
+          name
+          description
+          price
+          categories {
+            name
+          }
+        }
+      }
+      PurchaseDetail {
+        id
+        productId
+        product {
+          id
+          name
+          description
+          price
+          categories {
+            name
+          }
+        }
+      }
+      SellDetail {
+        id
+        productId
+        product {
+          id
+          name
+          description
+          price
+          categories {
+            name
+          }
+        }
+      }
+    }
+  }
+`;

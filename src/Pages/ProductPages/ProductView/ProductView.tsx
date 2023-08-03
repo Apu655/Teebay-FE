@@ -53,6 +53,7 @@ const ProductView = () => {
       await rentProduct({
         variables: rentProductForm,
       });
+      rentWarningMessageHandler.close();
     } catch (error) {
       console.log(error);
     }
@@ -60,6 +61,7 @@ const ProductView = () => {
 
   const handleBuyProduct = async () => {
     await buyProduct();
+    buyWarningMessageHandler.close();
   };
 
   useEffect(() => {
@@ -81,22 +83,12 @@ const ProductView = () => {
   }, [user]);
 
   const RentWarningMessage = () => {
-    const modalStyle: any = {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      maxHeight: "90vh", // Limit the modal height to 90% of the viewport height
-      padding: "20px", // Add some padding to the modal content
-      overflow: "visible",
-    };
     return (
       <Modal
         opened={rentWarningMessage}
         onClose={() => rentWarningMessageHandler.close()}
         centered
         title="Rental period"
-        style={modalStyle}
-        zIndex={0}
       >
         <div
           style={{

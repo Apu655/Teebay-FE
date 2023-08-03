@@ -9,25 +9,30 @@ import { Link } from "react-router-dom";
 import { AuthGuard } from "@/Guards";
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCTS } from "@/Queries/ProductQueries";
-import { useEffect } from "react";
+import { useEffect, useContext, useState } from "react";
 import ProductViewCard from "@/Common/Components/ProductCard/ProductViewCard";
+import { UserContext } from "@/Context/UserContext";
 
 const AllProduct = () => {
+  const { user } = useContext(UserContext);
   const { data, loading, error, refetch } = useQuery(GET_PRODUCTS);
-  console.log(data);
+  const [products, setProducts] = useState<any>([]);
 
   useEffect(() => {
-    refetch();
-  }, []);
+    if (data && user) {
+      setProducts(
+        data.getAllProduct.filter((val: any) => val.createdBy != user.id)
+      );
+    }
+  }, [user, data]);
   if (loading) return <LoadingOverlay visible={loading} />;
   return (
     <AuthGuard>
       <PageStyle>
         <StyledTitle align="center">All Product</StyledTitle>
         <ProductListWrapper>
-          {data &&
-            data.getAllProduct &&
-            data.getAllProduct.map((val: any, index: number) => (
+          {products &&
+            products.map((val: any, index: number) => (
               <ProductViewCard refetch={refetch} {...val} key={index} />
             ))}
         </ProductListWrapper>
