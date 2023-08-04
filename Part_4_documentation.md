@@ -1,15 +1,28 @@
 # Project Structure
+Components/: Contains all the components.
+
 Common/: Contains components that are used multiple times in the application.
+
 Config/: Contains configuration file, mantine theme config for example
+
 graphql/: Includes GraphQL queries, mutations, and schema files.
+
 Context/: Contains UserContext for state management
+
 Guards/: Includes components that provides auth/special access
+
 Mutations/: Contains GraphQL mutations
+
 Pages/: Includes all the pages of the application
+
 Queries/: Contains GraphQL queries.
+
 Routes/: Includes all the routes of the application
+
 Assets/: Contains static files of the application
+
 App.tsx: The entry point of the application.
+
 index.tsx: The file responsible for rendering the React application.
 
 # Features
