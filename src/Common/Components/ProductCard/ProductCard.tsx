@@ -41,7 +41,6 @@ const ProductCard = ({
         title="Are you sure you want to delete this product?"
         centered
       >
-        Are you sure you want to delete this product?
         <Flex justify="flex-end" gap={10}>
           <Button onClick={() => deleteWarningMessageHandler.close()}>
             No

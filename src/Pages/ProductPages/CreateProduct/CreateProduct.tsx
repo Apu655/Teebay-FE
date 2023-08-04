@@ -141,7 +141,15 @@ const CreateProduct = () => {
                 {productCreationForm.values.categories.map((val, index) => {
                   for (const category of categoriesLabels) {
                     if (category.value == val) {
-                      return <span key={index}>{category.label} {index==productCreationForm.values.categories.length-1?"":", "}</span>;
+                      return (
+                        <span key={index}>
+                          {category.label}{" "}
+                          {index ==
+                          productCreationForm.values.categories.length - 1
+                            ? ""
+                            : ", "}
+                        </span>
+                      );
                     }
                   }
                 })}

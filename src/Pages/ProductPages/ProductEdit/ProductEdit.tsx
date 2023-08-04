@@ -47,10 +47,10 @@ const ProductEdit = () => {
     { data: updateData, loading: updateLoading, error: updateError },
   ] = useMutation(UPDATE_PRODUCT);
 
-  const handleUpdate = (e: any) => {
+  const handleUpdate = async (e: any) => {
     e.preventDefault();
     try {
-      updateProduct({ variables: updateProductForm.values });
+      await updateProduct({ variables: updateProductForm.values });
     } catch (error) {
       console.log(error);
     }
